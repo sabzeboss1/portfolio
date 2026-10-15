@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Phalonne Guemkam — Software & Full-Stack Developer",
+    name: "Phalonne Guemkam — Software- & Full-Stack-Entwicklerin",
     short_name: "Phalonne PG",
-    description: "Portfolio of Phalonne Guemkam - Software Developer (Spring Boot, React, FastAPI, AI)",
+    description: "Portfolio von Phalonne Guemkam - Softwareentwicklerin (Spring Boot, React, FastAPI, KI)",
     start_url: "/",
     display: "standalone",
     background_color: "#f1f3f9",

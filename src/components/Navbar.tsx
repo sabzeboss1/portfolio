@@ -2,18 +2,24 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-const navItems = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Competencies", href: "#competencies" },
-  { label: "Projects", href: "#projects" },
-  { label: "Process", href: "#process" },
-  { label: "Education", href: "#education" },
-  { label: "Contact", href: "#contact" },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+import LanguageToggle from "./LanguageToggle";
 
 export default function Navbar() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const navItems = [
+    { label: t.nav.home, href: "#hero" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.competencies, href: "#competencies" },
+    { label: t.nav.projects, href: "#projects" },
+    { label: t.nav.process, href: "#process" },
+    { label: t.nav.education, href: "#education" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
+
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +45,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navItems]);
 
   return (
     <header
@@ -66,7 +72,7 @@ export default function Navbar() {
               Phalonne Guemkam
             </p>
             <p className="text-[11px] font-medium text-slate-400 leading-tight mt-0.5">
-              Software Developer
+              {t.nav.roleSubtitle}
             </p>
           </div>
         </Link>
@@ -91,13 +97,16 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons & Language Switcher */}
         <div className="flex items-center gap-2">
+          {/* Language Switcher (DE / EN) */}
+          <LanguageToggle />
+
           <a
             href="#contact"
             className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 bg-white/70 hover:bg-white border border-slate-200/80 rounded-full px-3.5 py-2 transition-all shadow-sm hover:shadow"
           >
-            <span>Resume</span>
+            <span>{t.nav.resume}</span>
             <svg
               className="w-3.5 h-3.5 text-slate-500"
               fill="none"
@@ -115,9 +124,9 @@ export default function Navbar() {
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-full px-4 py-2 transition-all shadow-sm hover:shadow group"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-full px-3.5 sm:px-4 py-2 transition-all shadow-sm hover:shadow group"
           >
-            <span>Let&apos;s Talk</span>
+            <span>{t.nav.letsTalk}</span>
             <span
               className="inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               aria-hidden="true"
@@ -165,6 +174,11 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="lg:hidden mt-2 glass-card rounded-2xl p-4 shadow-xl border border-white/90 animate-fadeIn">
           <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200/60 px-2">
+              <span className="text-xs font-medium text-slate-500">Sprache / Language:</span>
+              <LanguageToggle />
+            </div>
+
             {navItems.map((item) => (
               <a
                 key={item.href}
@@ -185,7 +199,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-center py-2 px-4 rounded-xl text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200"
               >
-                Download CV (PDF)
+                {t.hero.downloadCv} (PDF)
               </a>
             </div>
           </div>

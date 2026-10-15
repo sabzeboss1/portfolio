@@ -1,11 +1,22 @@
+"use client";
+
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 export default function Competencies() {
-  const competencies = [
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const competencyMeta: Record<
+    string,
     {
-      id: "backend",
-      title: "Backend & Microservices",
-      description:
-        "Design of high-throughput REST APIs, relational schemas (PostgreSQL), Spring Data JPA, SOLID architecture, and enterprise Java backend services.",
-      tag: "Spring Boot • JPA",
+      colorClass: string;
+      borderHover: string;
+      tagColor: string;
+      icon: React.ReactNode;
+    }
+  > = {
+    backend: {
       colorClass: "bg-blue-100/70 text-blue-600",
       borderHover: "hover:border-blue-300",
       tagColor: "group-hover:text-blue-600",
@@ -20,12 +31,7 @@ export default function Competencies() {
         </svg>
       ),
     },
-    {
-      id: "ai",
-      title: "AI & Intelligent Systems",
-      description:
-        "Integration of open-source LLMs (Llama 3.2), LoRA parameter-efficient fine-tuning, deterministic scheduling algorithms, and FastAPI endpoints.",
-      tag: "FastAPI • LoRA",
+    ai: {
       colorClass: "bg-purple-100/70 text-purple-600",
       borderHover: "hover:border-purple-300",
       tagColor: "group-hover:text-purple-600",
@@ -40,12 +46,7 @@ export default function Competencies() {
         </svg>
       ),
     },
-    {
-      id: "web",
-      title: "Web & UI Engineering",
-      description:
-        "Development of modern, modular SPAs with React, TypeScript, TailwindCSS, accessible component hierarchies, and resilient client state handling.",
-      tag: "React • TailwindCSS",
+    web: {
       colorClass: "bg-cyan-100/70 text-cyan-600",
       borderHover: "hover:border-cyan-300",
       tagColor: "group-hover:text-cyan-600",
@@ -60,12 +61,7 @@ export default function Competencies() {
         </svg>
       ),
     },
-    {
-      id: "telemetry",
-      title: "Distributed Telemetry",
-      description:
-        "Real-time publish-subscribe architectures using Eclipse Mosquitto MQTT, concurrent thread orchestration, Docker containers, and edge events.",
-      tag: "MQTT • Docker",
+    telemetry: {
       colorClass: "bg-amber-100/70 text-amber-600",
       borderHover: "hover:border-amber-300",
       tagColor: "group-hover:text-amber-600",
@@ -80,50 +76,53 @@ export default function Competencies() {
         </svg>
       ),
     },
-  ];
+  };
 
   return (
     <section className="space-y-6" data-purpose="services-competencies" id="competencies">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-brand-600">
-            What I Do
+            {t.competencies.tag}
           </span>
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Core Competencies &amp; Domains
+            {t.competencies.title}
           </h2>
         </div>
         <p className="text-xs sm:text-sm text-slate-500 max-w-md">
-          End-to-end full-stack development with deep focus on concurrent services, clean architecture, and modern web interfaces.
+          {t.competencies.subtitle}
         </p>
       </div>
 
       {/* 4 Grid Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {competencies.map((comp) => (
-          <div
-            key={comp.id}
-            className={`glass-card rounded-2xl p-6 border border-white hover:shadow-glass-hover transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 ${comp.borderHover}`}
-          >
-            <div>
-              <div
-                className={`w-12 h-12 rounded-xl ${comp.colorClass} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm`}
-              >
-                {comp.icon}
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">{comp.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{comp.description}</p>
-            </div>
+        {t.competencies.items.map((comp) => {
+          const meta = competencyMeta[comp.id] || competencyMeta.backend;
+          return (
             <div
-              className={`pt-5 flex items-center justify-between text-xs font-semibold text-slate-400 ${comp.tagColor} transition-colors`}
+              key={comp.id}
+              className={`glass-card rounded-2xl p-6 border border-white hover:shadow-glass-hover transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 ${meta.borderHover}`}
             >
-              <span>{comp.tag}</span>
-              <span className="transform transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                ↗
-              </span>
+              <div>
+                <div
+                  className={`w-12 h-12 rounded-xl ${meta.colorClass} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm`}
+                >
+                  {meta.icon}
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{comp.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{comp.description}</p>
+              </div>
+              <div
+                className={`pt-5 flex items-center justify-between text-xs font-semibold text-slate-400 ${meta.tagColor} transition-colors`}
+              >
+                <span>{comp.tag}</span>
+                <span className="transform transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  ↗
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -1,4 +1,12 @@
+"use client";
+
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 export default function About() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section
       className="glass-card rounded-3xl p-6 sm:p-10 border border-white/90 shadow-glass"
@@ -10,10 +18,10 @@ export default function About() {
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-2">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-600">
-              About Me
+              {t.about.tag}
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              Engineering with Empathy,<br className="hidden sm:inline" /> Building with Analytical Rigor
+              {t.about.titleLine1}<br className="hidden sm:inline" /> {t.about.titleLine2}
             </h2>
           </div>
 
@@ -31,7 +39,7 @@ export default function About() {
                 </svg>
               </div>
               <p className="text-2xl font-black text-slate-900">7+</p>
-              <p className="text-[11px] font-medium text-slate-500">Core Systems</p>
+              <p className="text-[11px] font-medium text-slate-500">{t.about.metric1Label}</p>
             </div>
 
             {/* Metric 2 */}
@@ -53,7 +61,7 @@ export default function About() {
                 </svg>
               </div>
               <p className="text-2xl font-black text-slate-900">B.Sc.</p>
-              <p className="text-[11px] font-medium text-slate-500">Informatik FH DO</p>
+              <p className="text-[11px] font-medium text-slate-500">{t.about.metric2Label}</p>
             </div>
 
             {/* Metric 3 */}
@@ -69,7 +77,7 @@ export default function About() {
                 </svg>
               </div>
               <p className="text-2xl font-black text-slate-900">3</p>
-              <p className="text-[11px] font-medium text-slate-500">DE (C1) • EN • FR</p>
+              <p className="text-[11px] font-medium text-slate-500">{t.about.metric3Label}</p>
             </div>
           </div>
         </div>
@@ -77,21 +85,24 @@ export default function About() {
         {/* Right: Background Context & Route */}
         <div className="lg:col-span-5 space-y-4">
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Graduated in <span className="font-semibold text-slate-800">Praktische Informatik (B.Sc.)</span> from{" "}
-            <span className="font-semibold text-slate-800">Fachhochschule Dortmund</span>. My technical journey began with top-tier STEM foundations in Cameroon, followed by successful academic integration in Germany, attaining professional C1 German mastery (DSH-2).
+            {t.about.bio1Part1}
+            <span className="font-semibold text-slate-800">{t.about.bio1Degree}</span>
+            {t.about.bio1Part2}
+            <span className="font-semibold text-slate-800">{t.about.bio1Uni}</span>
+            {t.about.bio1Part3}
           </p>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            I synthesize solid back-end architecture with human-centered front-end experiences, bringing structured problem-solving to every layer of the modern application stack.
+            {t.about.bio2}
           </p>
           <div className="pt-2 flex items-center justify-between">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-              <span className="text-brand-600">●</span> Cameroon ➔ Germany ➔ FH Dortmund
+              <span className="text-brand-600">●</span> {t.about.route}
             </span>
             <a
               className="inline-flex items-center gap-1 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors"
               href="#contact"
             >
-              <span>Connect with Me</span>
+              <span>{t.about.connectLink}</span>
               <span>↗</span>
             </a>
           </div>

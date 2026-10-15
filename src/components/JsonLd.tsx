@@ -9,9 +9,9 @@ export default function JsonLd() {
         alternateName: "Phalonne Guemkam",
         givenName: "Phalonne Christelle",
         familyName: "Guemkam Tuedjo",
-        jobTitle: "Software & Full-Stack Developer",
+        jobTitle: "Software- & Full-Stack-Entwicklerin / Software Developer",
         description:
-          "B.Sc. graduate in Practical Computer Science from FH Dortmund. Specializing in resilient backend microservices with Java/Spring Boot, modern React interfaces, applied AI (Llama 3.2), and distributed MQTT telemetry.",
+          "Portfolio von Phalonne Christelle Guemkam Tuedjo, B.Sc. in Praktischer Informatik der FH Dortmund. Spezialisiert auf resiliente Backend-Microservices mit Java/Spring Boot, moderne React-Oberflächen, angewandte KI (Llama 3.2) und verteilte MQTT-Telemetrie.",
         email: "phaloneguemkam@gmail.com",
         telephone: "+491781348626",
         url: "https://phalonne-guemkam.dev",
@@ -69,11 +69,11 @@ export default function JsonLd() {
         "@id": "https://phalonne-guemkam.dev/#website",
         url: "https://phalonne-guemkam.dev",
         name: "Phalonne Guemkam Portfolio",
-        description: "Official Portfolio of Phalonne Guemkam — Software & Full-Stack Developer",
+        description: "Offizielles Portfolio von Phalonne Guemkam — Software- & Full-Stack-Entwicklerin",
         publisher: {
           "@id": "https://phalonne-guemkam.dev/#person",
         },
-        inLanguage: ["en-US", "de-DE", "fr-FR"],
+        inLanguage: ["de-DE", "en-US", "fr-FR"],
       },
       {
         "@type": "ProfilePage",

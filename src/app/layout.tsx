@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -26,17 +27,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://phalonne-guemkam.dev"),
   title: {
-    default: "Phalonne Guemkam — Software & Full-Stack Developer | Spring Boot, React, AI",
+    default: "Phalonne Guemkam — Software- & Full-Stack-Entwicklerin | Spring Boot, React, KI",
     template: "%s | Phalonne Guemkam",
   },
   description:
-    "Portfolio of Phalonne Christelle Guemkam Tuedjo, B.Sc. in Practical Computer Science from FH Dortmund. Specializing in resilient Spring Boot microservices, high-performance React web platforms, applied AI (Llama 3.2, LoRA), and distributed MQTT telemetry.",
+    "Portfolio von Phalonne Christelle Guemkam Tuedjo, B.Sc. in Praktischer Informatik der FH Dortmund. Spezialisiert auf resiliente Spring-Boot-Microservices, performante React-Webanwendungen, angewandte KI (Llama 3.2, LoRA) und verteilte MQTT-Telemetrie.",
   keywords: [
     "Phalonne Guemkam",
     "Phalonne Christelle Guemkam Tuedjo",
-    "Software Developer",
-    "Full-Stack Developer",
-    "Spring Boot Developer Dortmund",
+    "Softwareentwicklerin Dortmund",
+    "Software Developer Germany",
+    "Full-Stack Entwicklerin",
+    "Spring Boot Developer",
     "React Developer",
     "FastAPI Python",
     "FH Dortmund Informatik",
@@ -59,27 +61,27 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    alternateLocale: ["de_DE", "fr_FR"],
+    locale: "de_DE",
+    alternateLocale: ["en_US", "fr_FR"],
     url: "https://phalonne-guemkam.dev",
-    title: "Phalonne Guemkam — Software & Full-Stack Developer",
+    title: "Phalonne Guemkam — Software- & Full-Stack-Entwicklerin",
     description:
-      "B.Sc. graduate in Practical Computer Science from FH Dortmund. Architecting resilient backend microservices, intelligent algorithmic workflows, and clean web applications.",
+      "B.Sc.-Absolventin in Praktischer Informatik der FH Dortmund. Konzeption robuster Backend-Microservices, intelligenter algorithmischer Workflows und moderner Webanwendungen.",
     siteName: "Phalonne Guemkam Portfolio",
     images: [
       {
         url: "https://lh3.googleusercontent.com/aida/AEtjO1VTyA6VPBoDqYm7gcX1-ooNIYb81ghcVvCzndz2rVcPVmj3rz2V9rSyz31KSrKmZV7V4I_dJGIGBKE5HY5eVst_ML1oO71enWIOIFSwX4ESGbJBaMOXtP4nY7xNT6si1k9Uni_rEW0_JKGyAHzBuhunZJgyXuLNCV_HY7Q0vNuTU-3XeyTBzXgOqEQCYu9PLquSHG6uhs3xHWfQ3EEVia60hEOPPDNnS1NpDeAeH6_gLU6i-xKC8720jI4",
         width: 1200,
         height: 630,
-        alt: "Phalonne Guemkam — Software Developer",
+        alt: "Phalonne Guemkam — Software- & Full-Stack-Entwicklerin",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Phalonne Guemkam — Software & Full-Stack Developer",
+    title: "Phalonne Guemkam — Software- & Full-Stack-Entwicklerin",
     description:
-      "B.Sc. in Practical Computer Science from FH Dortmund. Specializing in Spring Boot, React, FastAPI, and Distributed Telemetry.",
+      "B.Sc. in Praktischer Informatik an der FH Dortmund. Spezialisiert auf Spring Boot, React, FastAPI und verteilte Telemetrie.",
     images: [
       "https://lh3.googleusercontent.com/aida/AEtjO1VTyA6VPBoDqYm7gcX1-ooNIYb81ghcVvCzndz2rVcPVmj3rz2V9rSyz31KSrKmZV7V4I_dJGIGBKE5HY5eVst_ML1oO71enWIOIFSwX4ESGbJBaMOXtP4nY7xNT6si1k9Uni_rEW0_JKGyAHzBuhunZJgyXuLNCV_HY7Q0vNuTU-3XeyTBzXgOqEQCYu9PLquSHG6uhs3xHWfQ3EEVia60hEOPPDNnS1NpDeAeH6_gLU6i-xKC8720jI4",
     ],
@@ -103,12 +105,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+    <html lang="de" className={`${plusJakarta.variable} ${jetbrainsMono.variable} scroll-smooth`}>
       <head>
         <JsonLd />
       </head>
       <body className="relative min-h-screen overflow-x-hidden font-sans selection:bg-brand-500 selection:text-white antialiased">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

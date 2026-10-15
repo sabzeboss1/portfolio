@@ -1,235 +1,43 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ProjectModal, { ProjectData } from "./ProjectModal";
-
-const allProjects: ProjectData[] = [
-  {
-    id: "ai-study-planner",
-    code: "FEATURED // 01",
-    typeBadge: "FULL-STACK & AI",
-    period: "Bachelor Thesis",
-    title: "AI Study Planner",
-    category: "Full-Stack & Applied AI",
-    badge: "Llama-3.2",
-    filename: "AI_STUDY_PLANNER.py",
-    techHighlight: "Bachelor Thesis Focus System",
-    description:
-      "Intelligent web application generating personalized weekly university schedules via a hybrid deterministic constraint engine + fine-tuned Llama 3.2 LLM architecture.",
-    bullets: [
-      "Automated planning with Llama 3.2 (LoRA fine-tuning) & Ollama fallback",
-      "Institutional Super Administration with RBAC & bulk CSV/Excel import",
-      "Dynamic schedule versioning, conflict resolution & vector PDF export",
-    ],
-    stackText: "React • FastAPI • PostgreSQL 15+ • Llama 3.2",
-    pills: ["React", "FastAPI (Python)", "PostgreSQL 15+", "Llama 3.2 (LoRA)", "Docker", "Nginx"],
-    gradient: "bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900",
-    linkText: "Explore Architecture & Specs →",
-    longDescription:
-      "Developed as the central engineering artifact for the B.Sc. thesis at FH Dortmund. The system takes complex academic module catalogues, prerequisites, and student time constraints, applying a hybrid pipeline of fine-tuned Llama 3.2 (via LoRA parameter efficiency) and a deterministic topological constraint solver to prevent curriculum bottlenecks.",
-    architectureDetails: [
-      "LoRA adapter integration for tailored extraction of academic degree regulations and syllabi.",
-      "Deterministic graph-based scheduling algorithm eliminating AI hallucinations for prerequisites.",
-      "High-concurrency FastAPI microservice communicating with React SPA interface.",
-      "Containerized orchestration via Docker with PostgreSQL transactional storage.",
-    ],
-  },
-  {
-    id: "dortmund-events",
-    code: "PROJECT // 02",
-    typeBadge: "FULL-STACK",
-    period: "Real-Time Telemetry",
-    title: "Dortmund Event Platform",
-    category: "Enterprise Backend & IoT",
-    badge: "MQTT Telemetry",
-    filename: "DORTMUND_EVENTS.java",
-    techHighlight: "Real-Time Event Architecture",
-    description:
-      "Comprehensive event management system with Spring Boot backend, PostgreSQL persistence, stateless JWT security, and MQTT-driven telemetry streaming.",
-    bullets: [
-      "Real-time sensor telemetry ingestion via Eclipse Mosquitto broker",
-      "Spatial venue seating occupancy maps with live WebSocket push",
-      "Stateless JWT authentication and role-based access control",
-    ],
-    stackText: "Java • Spring Boot • React • PostgreSQL • MQTT",
-    pills: ["Java", "Spring Boot", "React", "PostgreSQL", "MQTT"],
-    gradient: "bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900",
-    linkText: "View System Blueprint →",
-    longDescription:
-      "A scalable IoT telemetry system designed for metropolitan venue management in Dortmund. Sensors publish crowd density and seat occupancy over Eclipse Mosquitto MQTT broker channels, which are ingested by a multi-threaded Spring Boot ingestion daemon and persisted into PostgreSQL with spatial indexing.",
-    architectureDetails: [
-      "Spring Boot 3 multi-threaded asynchronous subscriber consuming MQTT telemetry messages.",
-      "PostgreSQL schema designed with indexed spatial queries for venue zone occupancy.",
-      "Real-time WebSocket bridge pushing state updates to the frontend dashboard without polling.",
-      "Docker compose topology ensuring fault-tolerant broker recovery.",
-    ],
-  },
-  {
-    id: "bed-preparation",
-    code: "PROJECT // 03",
-    typeBadge: "SYSTEMS",
-    period: "Oct 2023 – Jan 2024",
-    title: "Bed Preparation System",
-    category: "Software Architecture & Modeling",
-    badge: "Domain Model",
-    filename: "BED_MANAGEMENT.uml",
-    techHighlight: "Clinical Process Automation",
-    description:
-      "Software engineering group project at FH Dortmund. Concept, domain modeling, and user-centric GUI prototyping for healthcare bed lifecycle management using UML diagrams.",
-    bullets: [
-      "Comprehensive UML modeling: Class diagrams, state machines, and activity workflows",
-      "Strict hygiene lifecycle state machine (Contaminated → Disinfecting → Prepared → Occupied)",
-      "Java domain model with clean separation of concerns and validation logic",
-    ],
-    stackText: "UML Modeling • GUI Design • Software Engineering",
-    pills: ["UML Modeling", "GUI Design", "Software Engineering", "Java"],
-    gradient: "bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950",
-    linkText: "View Concept Scope →",
-    longDescription:
-      "Engineered clinical workflow automation to solve hospital capacity bottlenecks during bed turnaround. The project formalizes hospital hygiene cycles, ward transfers, and patient discharge states using strict UML state machine specifications, mapped to an object-oriented Java domain model.",
-    architectureDetails: [
-      "State Pattern implementation handling sanitary transitions.",
-      "Rigorous UML behavioral models ensuring zero race-conditions in bed assignment queues.",
-      "Extensive unit testing validating state transition invariants and regulatory compliance.",
-      "Clean Architecture decoupling core domain logic from persistence and interface drivers.",
-    ],
-  },
-  {
-    id: "password-generator",
-    code: "PROJECT // 04",
-    typeBadge: "SECURITY",
-    period: "Jul 2023 – Sep 2023",
-    title: "Secure Password Generator",
-    category: "Web Utilities & Security",
-    badge: "Web Crypto",
-    filename: "PASSWORD_GEN.js",
-    techHighlight: "Cryptographic Entropy Engine",
-    description:
-      "Interactive client-side web utility for customizable, cryptographically strong password creation with entropy indicators and copy-to-clipboard functionality.",
-    bullets: [
-      "Cryptographically secure pseudo-random number generator (Crypto.getRandomValues)",
-      "Real-time password entropy calculation and brute-force crack time estimates",
-      "Zero server telemetry: 100% client-side memory safety and instant clipboard copy",
-    ],
-    stackText: "HTML5 • CSS3 • JavaScript",
-    pills: ["HTML5", "CSS3", "JavaScript"],
-    gradient: "bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-900",
-    linkText: "View Source / Specs →",
-    longDescription:
-      "A client-side cryptographic utility designed for security-conscious users. Utilizing the browser Web Cryptography API, it guarantees entropy without relying on standard Math.random pseudo-randomness. Includes custom character set options and visual strength heatmaps.",
-    architectureDetails: [
-      "Native Web Crypto API (crypto.getRandomValues) preventing predictable seed patterns.",
-      "Entropy bit scoring computed via Shannon entropy formulas.",
-      "Zero network payloads ensuring complete credential privacy.",
-    ],
-  },
-  {
-    id: "digital-education",
-    code: "PROJECT // 05",
-    typeBadge: "FRONTEND",
-    period: "Sep 2022 – Jan 2023",
-    title: "Digital Education Web App",
-    category: "Frontend & E-Learning",
-    badge: "E-Learning",
-    filename: "EDUCATION_PORTAL.html",
-    techHighlight: "Coursework Delivery Platform",
-    description:
-      "E-learning portal built for structured coursework delivery, interactive module exercises, progress state tracking, and responsive accessibility across viewports.",
-    bullets: [
-      "Modular coursework navigation with interactive practice quiz logic",
-      "LocalStorage-persisted learning progress and completion milestones",
-      "Semantic WCAG 2.1 accessible markup with responsive fluid design",
-    ],
-    stackText: "HTML5 • CSS3 • JavaScript",
-    pills: ["HTML5", "CSS3", "JavaScript"],
-    gradient: "bg-gradient-to-br from-violet-950 via-slate-900 to-slate-900",
-    linkText: "View Application Flow →",
-    longDescription:
-      "An educational portal delivering structured modules and step-by-step programming tutorials. Features accessible components, keyboard navigation, and responsive layouts tailored for mobile, tablet, and desktop students.",
-    architectureDetails: [
-      "Semantic HTML5 landmarks adhering to WCAG 2.1 accessibility guidelines.",
-      "Client-side quiz evaluation engine with instant feedback loops.",
-      "Zero-dependency vanilla architecture optimizing load time to sub-second.",
-    ],
-  },
-  {
-    id: "java-apps-suite",
-    code: "PROJECT // 06",
-    typeBadge: "DESKTOP OOP",
-    period: "Mar 2022 – Jul 2022",
-    title: "Java Applications Suite",
-    category: "Desktop Software & Algorithms",
-    badge: "Minimax & JavaFX",
-    filename: "JAVA_SUITE.java",
-    techHighlight: "Game Theory & Media GUI",
-    description:
-      "Console Tic-Tac-Toe logic engine with minimax evaluation alongside a full Media Management Prototype featuring a rich JavaFX graphical interface.",
-    bullets: [
-      "Unbeatable AI opponent implementation using minimax adversarial search",
-      "JavaFX desktop GUI for cataloguing, sorting, and filtering multimedia entries",
-      "Object-oriented file serialization and exception handling hierarchy",
-    ],
-    stackText: "Java • JavaFX • OOP",
-    pills: ["Java", "JavaFX", "OOP"],
-    gradient: "bg-gradient-to-br from-amber-950 via-slate-900 to-slate-900",
-    linkText: "View Architecture →",
-    longDescription:
-      "A dual-purpose software engineering suite comprising an algorithmic game theory solver and a desktop GUI application. Built to demonstrate rigorous object-oriented design patterns, recursion, and graphical event bindings in Java.",
-    architectureDetails: [
-      "Recursive minimax algorithm with alpha-beta pruning concepts.",
-      "JavaFX Model-View-Controller (MVC) decoupling UI views from storage layers.",
-      "Custom binary serialization for persistent multimedia library states.",
-    ],
-  },
-  {
-    id: "interactive-systems-engine",
-    code: "PROJECT // 07",
-    typeBadge: "SYSTEMS OOP",
-    period: "Academic Study",
-    title: "Interactive Systems Engine",
-    category: "Core Systems & Concurrency",
-    badge: "Concurrency",
-    filename: "CONCURRENT_ENGINE.java",
-    techHighlight: "Multithreaded Java Architecture",
-    description:
-      "Rigorous object-oriented programming study exploring abstract class hierarchies, polymorphism, thread synchronization, concurrency, and event-driven JavaFX components.",
-    bullets: [
-      "Multi-threaded worker pool with synchronized resource sharing",
-      "Deep inheritance hierarchies and interface polymorphism",
-      "Event-driven UI updates with JavaFX concurrency task bindings",
-    ],
-    stackText: "Java • Multithreading • Polymorphism",
-    pills: ["Java", "Multithreading", "Polymorphism"],
-    gradient: "bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-900",
-    linkText: "View Code Breakdown →",
-    longDescription:
-      "An advanced investigation into Java concurrency and polymorphic design patterns. Explores thread synchronization primitives, locks, condition variables, and real-time visualization of concurrent tasks in a JavaFX interface.",
-    architectureDetails: [
-      "Thread-safe producer-consumer queue design avoiding deadlock states.",
-      "Extensive polymorphic interface hierarchy showcasing Open-Closed Principle.",
-      "JavaFX Task and Service worker threads preventing UI thread freezing.",
-    ],
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 type FilterCategory = "all" | "fullstack-ai" | "systems-oop" | "web";
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  const { language } = useLanguage();
+  const t = translations[language];
+  const allProjects = t.projects.list;
+
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterCategory>("all");
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Filter projects for desktop view
+  // Selected project object dynamically retrieved based on current language
+  const selectedProject: ProjectData | null =
+    allProjects.find((p) => p.id === selectedProjectId) || null;
+
+  // Filter projects by category
   const filteredProjects = allProjects.filter((p) => {
     if (activeFilter === "all") return true;
-    if (activeFilter === "fullstack-ai")
-      return p.category.includes("AI") || p.category.includes("Backend");
-    if (activeFilter === "systems-oop")
-      return p.category.includes("Systems") || p.category.includes("Modeling") || p.category.includes("Algorithms");
-    if (activeFilter === "web")
-      return p.category.includes("Security") || p.category.includes("Frontend");
+    if (activeFilter === "fullstack-ai") {
+      return p.id === "ai-study-planner" || p.id === "dortmund-events";
+    }
+    if (activeFilter === "systems-oop") {
+      return (
+        p.id === "bed-preparation" ||
+        p.id === "java-apps-suite" ||
+        p.id === "interactive-systems-engine"
+      );
+    }
+    if (activeFilter === "web") {
+      return p.id === "password-generator" || p.id === "digital-education";
+    }
     return true;
   });
 
@@ -279,17 +87,17 @@ export default function Projects() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-600">
-              Portfolio Directory
+              {t.projects.tag}
             </span>
             <span className="text-xs font-mono font-bold bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full border border-brand-200">
-              {allProjects.length} Projects
+              {allProjects.length} {t.projects.countSuffix}
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
-            Selected Projects
+            {t.projects.title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl mt-1">
-            A catalogue of software engineering projects, desktop applications, web interfaces, and academic implementations.
+            {t.projects.subtitle}
           </p>
         </div>
 
@@ -298,46 +106,46 @@ export default function Projects() {
           <button
             type="button"
             onClick={() => setActiveFilter("all")}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all cursor-pointer ${
               activeFilter === "all"
                 ? "bg-white text-slate-900 shadow-sm font-semibold"
                 : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
             }`}
           >
-            All ({allProjects.length})
+            {t.projects.filterAll} ({allProjects.length})
           </button>
           <button
             type="button"
             onClick={() => setActiveFilter("fullstack-ai")}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all cursor-pointer ${
               activeFilter === "fullstack-ai"
                 ? "bg-white text-slate-900 shadow-sm font-semibold"
                 : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
             }`}
           >
-            Full-Stack &amp; AI
+            {t.projects.filterFullstackAi}
           </button>
           <button
             type="button"
             onClick={() => setActiveFilter("systems-oop")}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all cursor-pointer ${
               activeFilter === "systems-oop"
                 ? "bg-white text-slate-900 shadow-sm font-semibold"
                 : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
             }`}
           >
-            Systems &amp; OOP
+            {t.projects.filterSystemsOop}
           </button>
           <button
             type="button"
             onClick={() => setActiveFilter("web")}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all cursor-pointer ${
               activeFilter === "web"
                 ? "bg-white text-slate-900 shadow-sm font-semibold"
                 : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
             }`}
           >
-            Web &amp; Utilities
+            {t.projects.filterWeb}
           </button>
         </div>
       </div>
@@ -350,7 +158,7 @@ export default function Projects() {
         <div className="flex items-center justify-between px-1">
           <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-            Swipe or use arrows ({activeSlideIndex + 1}/{allProjects.length})
+            {t.projects.swipeHint} ({activeSlideIndex + 1}/{allProjects.length})
           </span>
           <div className="flex items-center gap-1.5">
             <button
@@ -379,10 +187,10 @@ export default function Projects() {
           className="flex overflow-x-auto gap-4 snap-x snap-mandatory scroll-smooth pb-3 px-1 scrollbar-none"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {allProjects.map((project, idx) => (
+          {allProjects.map((project) => (
             <article
               key={project.id}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => setSelectedProjectId(project.id)}
               className="w-[88vw] sm:w-[75vw] shrink-0 snap-center glass-card rounded-3xl p-5 border border-white shadow-lg flex flex-col justify-between cursor-pointer active:scale-[0.99] transition-transform"
             >
               <div className="space-y-3.5">
@@ -450,7 +258,7 @@ export default function Projects() {
               {/* Bottom Card Footer */}
               <div className="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-xs font-semibold text-brand-600">
-                  {project.linkText || "View Details →"}
+                  {project.linkText || t.projects.viewDetails}
                 </span>
                 <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center text-xs">
                   ↗
@@ -467,7 +275,7 @@ export default function Projects() {
               key={dotIdx}
               type="button"
               onClick={() => scrollToSlide(dotIdx)}
-              className={`transition-all duration-300 rounded-full ${
+              className={`transition-all duration-300 rounded-full cursor-pointer ${
                 activeSlideIndex === dotIdx
                   ? "w-6 h-2 bg-slate-900"
                   : "w-2 h-2 bg-slate-300 hover:bg-slate-400"
@@ -485,7 +293,7 @@ export default function Projects() {
         {filteredProjects.map((project) => (
           <article
             key={project.id}
-            onClick={() => setSelectedProject(project)}
+            onClick={() => setSelectedProjectId(project.id)}
             className="glass-card rounded-3xl p-6 border border-white hover:shadow-glass-hover transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
           >
             <div className="space-y-4">
@@ -559,7 +367,7 @@ export default function Projects() {
             {/* Bottom Row */}
             <div className="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between">
               <span className="text-xs font-semibold text-brand-600 group-hover:text-brand-700 transition-colors">
-                {project.linkText || "Explore Specs →"}
+                {project.linkText || t.projects.viewDetails}
               </span>
               <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center text-xs group-hover:bg-slate-900 group-hover:text-white transition-colors">
                 ↗
@@ -570,7 +378,7 @@ export default function Projects() {
       </div>
 
       {/* Project Modal Deep Dive */}
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectModal project={selectedProject} onClose={() => setSelectedProjectId(null)} />
     </section>
   );
 }

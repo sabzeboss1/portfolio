@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export default function Contact() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -62,13 +67,13 @@ export default function Contact() {
         <div className="lg:col-span-5 space-y-6">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-600">
-              Let&apos;s Connect
+              {t.contact.tag}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
-              Have a project or engineering role in mind?
+              {t.contact.title}
             </h2>
             <p className="text-sm text-slate-600 mt-3 leading-relaxed font-normal">
-              I am open to full-time Software Developer / Full-Stack Engineer opportunities in Germany (NRW / hybrid / remote). Let&apos;s talk about building impactful digital solutions together.
+              {t.contact.description}
             </p>
           </div>
 
@@ -83,17 +88,17 @@ export default function Contact() {
                   @
                 </div>
                 <div className="truncate">
-                  <p className="text-slate-400 font-medium text-[11px]">Direct Email</p>
+                  <p className="text-slate-400 font-medium text-[11px]">{t.contact.emailLabel}</p>
                   <p className="text-slate-800 font-semibold truncate">phaloneguemkam@gmail.com</p>
                 </div>
               </a>
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="px-2.5 py-1 text-[11px] font-medium text-slate-500 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors ml-2 shrink-0"
-                title="Copy Email"
+                className="px-2.5 py-1 text-[11px] font-medium text-slate-500 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors ml-2 shrink-0 cursor-pointer"
+                title={t.contact.copy}
               >
-                {copiedEmail ? "Copied! ✓" : "Copy"}
+                {copiedEmail ? t.contact.copied : t.contact.copy}
               </button>
             </div>
 
@@ -111,17 +116,17 @@ export default function Contact() {
                   </svg>
                 </div>
                 <div className="truncate">
-                  <p className="text-slate-400 font-medium text-[11px]">Phone / Mobile</p>
+                  <p className="text-slate-400 font-medium text-[11px]">{t.contact.phoneLabel}</p>
                   <p className="text-slate-800 font-semibold truncate">+49 178 1348626</p>
                 </div>
               </a>
               <button
                 type="button"
                 onClick={handleCopyPhone}
-                className="px-2.5 py-1 text-[11px] font-medium text-slate-500 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors ml-2 shrink-0"
-                title="Copy Phone"
+                className="px-2.5 py-1 text-[11px] font-medium text-slate-500 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors ml-2 shrink-0 cursor-pointer"
+                title={t.contact.copy}
               >
-                {copiedPhone ? "Copied! ✓" : "Copy"}
+                {copiedPhone ? t.contact.copied : t.contact.copy}
               </button>
             </div>
 
@@ -144,8 +149,8 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <p className="text-slate-400 font-medium text-[11px]">Location</p>
-                <p className="text-slate-800 font-semibold">Dortmund, North Rhine-Westphalia, Germany</p>
+                <p className="text-slate-400 font-medium text-[11px]">{t.contact.locationLabel}</p>
+                <p className="text-slate-800 font-semibold">{t.contact.locationValue}</p>
               </div>
             </div>
           </div>
@@ -158,19 +163,19 @@ export default function Contact() {
               <div className="w-12 h-12 mx-auto rounded-full bg-emerald-500 text-white flex items-center justify-center text-xl font-bold">
                 ✓
               </div>
-              <h3 className="text-lg font-bold text-emerald-900">Message Ready!</h3>
+              <h3 className="text-lg font-bold text-emerald-900">{t.contact.successTitle}</h3>
               <p className="text-xs text-emerald-700 max-w-md mx-auto">
-                Thank you, {formData.name || "friend"}! Your message was prepared. If your email client didn&apos;t automatically launch, you can directly reach me at{" "}
+                {t.contact.successDesc}{" "}
                 <a href="mailto:phaloneguemkam@gmail.com" className="font-bold underline">
                   phaloneguemkam@gmail.com
-                </a>.
+                </a>
               </p>
               <button
                 type="button"
                 onClick={() => setSubmitted(false)}
-                className="mt-3 px-4 py-2 text-xs font-semibold text-emerald-800 bg-white rounded-xl border border-emerald-300 hover:bg-emerald-100 transition-colors"
+                className="mt-3 px-4 py-2 text-xs font-semibold text-emerald-800 bg-white rounded-xl border border-emerald-300 hover:bg-emerald-100 transition-colors cursor-pointer"
               >
-                Send Another Message
+                {t.contact.successAgainBtn}
               </button>
             </div>
           ) : (
@@ -179,12 +184,12 @@ export default function Contact() {
                 {/* Name Input */}
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-slate-700" htmlFor="contact-name">
-                    Your Name
+                    {t.contact.formName}
                   </label>
                   <input
                     className="w-full text-xs rounded-xl bg-white/70 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 px-3.5 py-3 shadow-sm transition outline-none"
                     id="contact-name"
-                    placeholder="e.g. Dr. Alex Weber"
+                    placeholder={t.contact.formNamePlaceholder}
                     required
                     type="text"
                     value={formData.name}
@@ -194,12 +199,12 @@ export default function Contact() {
                 {/* Email Input */}
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-slate-700" htmlFor="contact-email">
-                    Your Email
+                    {t.contact.formEmail}
                   </label>
                   <input
                     className="w-full text-xs rounded-xl bg-white/70 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 px-3.5 py-3 shadow-sm transition outline-none"
                     id="contact-email"
-                    placeholder="alex.weber@company.de"
+                    placeholder={t.contact.formEmailPlaceholder}
                     required
                     type="email"
                     value={formData.email}
@@ -211,7 +216,7 @@ export default function Contact() {
               {/* Subject / Inquiry Topic */}
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-slate-700" htmlFor="contact-subject">
-                  Inquiry Type / Role
+                  {t.contact.formSubject}
                 </label>
                 <select
                   className="w-full text-xs rounded-xl bg-white/70 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 px-3.5 py-3 shadow-sm transition outline-none"
@@ -219,22 +224,22 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                 >
-                  <option value="software-role">Full-Time Software Engineer Role (Spring / React / Python)</option>
-                  <option value="freelance">Freelance Web / Full-Stack Project</option>
-                  <option value="consulting">AI &amp; Distributed System Consultation</option>
-                  <option value="other">General Tech Inquiry &amp; Networking</option>
+                  <option value="software-role">{t.contact.formSubjectOptions.softwareRole}</option>
+                  <option value="freelance">{t.contact.formSubjectOptions.freelance}</option>
+                  <option value="consulting">{t.contact.formSubjectOptions.consulting}</option>
+                  <option value="other">{t.contact.formSubjectOptions.other}</option>
                 </select>
               </div>
 
               {/* Message Input */}
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-slate-700" htmlFor="contact-message">
-                  Your Message
+                  {t.contact.formMessage}
                 </label>
                 <textarea
                   className="w-full text-xs rounded-xl bg-white/70 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 px-3.5 py-3 shadow-sm transition outline-none"
                   id="contact-message"
-                  placeholder="Tell me about your team, tech stack, or engineering project..."
+                  placeholder={t.contact.formMessagePlaceholder}
                   required
                   rows={4}
                   value={formData.message}
@@ -249,14 +254,14 @@ export default function Contact() {
                   disabled={loading}
                   className="w-full inline-flex items-center justify-center gap-2 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 disabled:opacity-75 rounded-xl px-6 py-3.5 transition-all shadow-md group cursor-pointer"
                 >
-                  <span>{loading ? "Processing..." : "Send Message"}</span>
+                  <span>{loading ? t.contact.submittingBtn : t.contact.submitBtn}</span>
                   <span className="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">
                     ↗
                   </span>
                 </button>
               </div>
               <p className="text-[11px] text-center text-slate-400">
-                Direct response usually within 24 hours. Privacy assured.
+                {t.contact.responseNote}
               </p>
             </form>
           )}
